@@ -16,7 +16,7 @@ namespace UltraManufacturing.Models.Entities
         public string Email { get; set; }
         public DateTime CreationDate { get; set; }
 
-        public UserCredential UserCredential { get; set; }
-        public ICollection<UserPermission> UserPermission { get; set; }
+        public virtual UserCredential UserCredential { get; set; }
+        public virtual ICollection<UserPermission> UserPermission { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UltraManufacturing.Models
 {
-    public class Contact
+    public partial class Contact
     {
         [Required]
         [StringLength(100)]

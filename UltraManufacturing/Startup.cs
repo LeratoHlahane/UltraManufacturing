@@ -83,6 +83,12 @@ namespace UltraManufacturing
 
             app.UseMvc(routes =>
             {
+
+                routes.MapRoute(
+                name: "UserManagement",
+                template: "Management/User/{action}/{id?}",
+                defaults: new { controller = "UserManagement", action = "Index" });
+                
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

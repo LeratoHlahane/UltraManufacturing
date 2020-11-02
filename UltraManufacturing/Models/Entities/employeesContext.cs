@@ -217,24 +217,25 @@ namespace UltraManufacturing.Models.Entities
                 entity.HasOne(d => d.IdNavigation)
                     .WithOne(p => p.UserCredential)
                     .HasForeignKey<UserCredential>(d => d.Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_UserCredential_User");
             });
 
             modelBuilder.Entity<UserPermission>(entity =>
             {
-                entity.HasKey(e => new { e.UserId, e.PermissionId });
+                entity.HasKey(e => new { e.UserId, e.PermissionId })
+                    .HasName("PK_UserPermissions");
 
                 entity.HasOne(d => d.Permission)
                     .WithMany(p => p.UserPermission)
                     .HasForeignKey(d => d.PermissionId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_UserPermissions_Permissions");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.UserPermission)
                     .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_UserPermissions_Users");
             });
         }

@@ -14,6 +14,6 @@ namespace UltraManufacturing.Models.Entities
         public string Code { get; set; }
         public string Title { get; set; }
 
-        public ICollection<UserPermission> UserPermission { get; set; }
+        public virtual ICollection<UserPermission> UserPermission { get; set; }
     }
 }

@@ -9,6 +9,6 @@ namespace UltraManufacturing.Models.Entities
         public string HashedPassword { get; set; }
         public string PasswordSalt { get; set; }
 
-        public User IdNavigation { get; set; }
+        public virtual User IdNavigation { get; set; }
     }
 }
