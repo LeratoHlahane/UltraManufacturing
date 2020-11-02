@@ -8,10 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using UltraManufacturing.Models.Entities;
 using UltraManufacturing.Models.ViewModels;
 using UltraManufacturing.Services;
+using UltraManufacturing.Filters;
 
 namespace UltraManufacturing.Controllers
 {
-    
+   // [UMAuthentication(permissions: "UserManagement")]
     public class UserManagementController : Controller
     {
         private readonly employeesContext _context;
@@ -38,7 +39,7 @@ namespace UltraManufacturing.Controllers
             }
 
             var user = await _context.User
-            .SingleOrDefaultAsync(m => m.Id == id); // or .SingleOrDefaultAsync(m => m.Id == id);
+            .SingleOrDefaultAsync(m => m.Id == id); 
             if (user == null)
             {
                 return NotFound();
@@ -53,22 +54,7 @@ namespace UltraManufacturing.Controllers
             return View();
         }
 
-        // POST: UserManagement/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        // [HttpPost]
-        // [ValidateAntiForgeryToken]
-        // public async Task<IActionResult> Create([Bind("FirstName,LastName,Email")] User user)
-        // {
-        //    if (ModelState.IsValid)
-        //    {
-        //        user.CreationDate = DateTime.UtcNow;
-        //       _context.Add(user);
-        //      await _context.SaveChangesAsync();
-        //      return RedirectToAction(nameof(Index));
-        //   }
-        //   return View(user);
-        // }
+        
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -119,40 +105,7 @@ namespace UltraManufacturing.Controllers
             return View(user);
         }
 
-        // POST: UserManagement/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //  [HttpPost]
-        //  [ValidateAntiForgeryToken]
-        //  public async Task<IActionResult> Edit(int id, [Bind("FirstName,LastName,Email")] User user)
-        //  {
-        //  if (id != user.Id)
-        //  {
-        //     return NotFound();
-        //  }
-
-        //    if (ModelState.IsValid)
-        //   {
-        //   try
-        //  {
-        //     _context.Update(user);
-        //    await _context.SaveChangesAsync();
-        //  }
-        //  catch (DbUpdateConcurrencyException)
-        //  {
-        //   if (!UserExists(user.Id))
-        //  {
-        //     return NotFound();
-        //   }
-        //  else
-        //   {
-        //      throw;
-        //    }
-        //  }
-        //    return RedirectToAction(nameof(Index));
-        //  }
-        //  return View(user);
-        //}
+       
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -185,8 +138,6 @@ namespace UltraManufacturing.Controllers
         }
 
 
-
-
         // GET: UserManagement/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -208,14 +159,6 @@ namespace UltraManufacturing.Controllers
         // POST: UserManagement/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-       // public async Task<IActionResult> DeleteConfirmed(int id)
-       // {
-          //  var user = await _context.User.FindAsync(id);
-          //  _context.User.Remove(user);
-          //  await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-      //  }
-
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var user = await _context.User.Include(u => u.UserCredential)
@@ -329,5 +272,15 @@ namespace UltraManufacturing.Controllers
             return RedirectToAction("Permissions", new { id = userId });
         }
         
+    }
+
+    internal class UMAuthenticationAttribute : Attribute
+    {
+        private string v;
+
+        public UMAuthenticationAttribute(string v)
+        {
+            this.v = v;
+        }
     }
 }

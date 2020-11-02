@@ -50,6 +50,7 @@ namespace UltraManufacturing
             
             services.Configure<SmtpOptions>(Configuration);
             services.Configure<ContactOptions>(Configuration);
+            services.Configure<AuthOptions>(Configuration);
 
 
             var connectionString = Configuration.GetConnectionString("UltraManufacturingDatabase");
@@ -58,6 +59,8 @@ namespace UltraManufacturing
             services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
             services.AddSingleton<Smtp, Smtp>();
             services.AddSingleton<Cryptography>();
+            services.AddScoped<UMAuthentication>();
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -95,4 +98,6 @@ namespace UltraManufacturing
             });
         }
     }
+
+   
 }

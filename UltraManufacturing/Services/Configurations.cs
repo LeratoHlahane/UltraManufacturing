@@ -20,5 +20,9 @@ namespace UltraManufacturing.Services
         public string ContactToAddress { get; set; }
     }
 
+    public class AuthOptions
+    {
+        public string AuthEncryptionKey { get; set; }
+    }
     
 }
